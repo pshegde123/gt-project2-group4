@@ -9,8 +9,12 @@ module.exports = function(app) {
   });
 
   // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
+  app.post("/add", function(req, res) {
+    db.BookMark.create({
+      City:req.body.city,
+      Address:req.body.address,
+      Notes:req.body.notes
+    }).then(function(dbExample) {
       res.json(dbExample);
     });
   });
