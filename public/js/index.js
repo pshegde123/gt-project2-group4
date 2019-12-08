@@ -12,6 +12,7 @@ var handleFormSubmit = function (event) {
   console.log("searchString=", searchString);
   $searchBarText.val("");
 };
+
 function initialize() {
   /*var input = document.getElementById('searchBar');
   var autocomplete = new google.maps.places.Autocomplete(input);
@@ -29,21 +30,11 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   map = new google.maps.Map(document.getElementById("map"), mapProp);
-  
-  // Create the search box and link it to the UI element.
-  var input = document.getElementById('pac-input');
-  var searchBox = new google.maps.places.SearchBox(input);
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-  // Bias the SearchBox results towards current map's viewport.
-  map.addListener('bounds_changed', function () {
-    searchBox.setBounds(map.getBounds());
-  });
-  
   //display markers on the map
   displayMarkers(center, map);
 }
 function displayMarkers(centerLocation, map) {
+
   var request = {
     location: centerLocation,
     radius: 8047,
@@ -75,5 +66,6 @@ function createMarker(place) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
