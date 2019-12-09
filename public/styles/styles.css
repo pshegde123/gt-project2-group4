@@ -32,3 +32,8 @@
 #searchBar{
   width: 400px;
 }
+.card-header button.delete,
+button.edit{
+  float: right;
+  margin: 5px;
+}
