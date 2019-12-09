@@ -13,14 +13,14 @@ $(function () {
             notes: $("#notes").val().trim()
         };
         // Send the POST request.
-        $.ajax("/add", {
+        $.ajax("/api/bookmarks/add", {
             type: "POST",
             data: newEntry
         }).then(
             function () {
                 console.log("created new bookmark entry");
                 // Reload the page to get the updated list
-                location.reload();
+                location.href = '/Bookmarks';
             }
         );
     });  
