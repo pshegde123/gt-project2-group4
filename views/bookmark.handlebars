@@ -8,8 +8,8 @@
         {{#each bookmarks}}
           <div class="card mt-2">
             <div class="card-header">
-              <button class="delete btn btn-danger">X</button>
-              <button class="edit btn btn-default">EDIT</button>
+              <button class="delete btn btn-danger deleteBookmark" data-id="{{this.id}}">X</button>
+              <button class="edit btn btn-default editBookmark">EDIT</button>
               {{ City }}
             </div>
             <div class="card-body">
