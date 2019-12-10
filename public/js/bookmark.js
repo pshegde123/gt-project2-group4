@@ -8,6 +8,7 @@ $(function () {
 
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
+    
     var newEntry = {
       city: $("#bcity").val().trim(),
       address: $("#baddress").val().trim(),
@@ -21,7 +22,8 @@ $(function () {
       function () {
         console.log("created new bookmark entry");
         // Reload the page to get the updated list
-        location.href = '/Bookmarks';
+        //location.href = '/Bookmarks';
+        location.href = '/';
       }
     );
   });
