@@ -27,8 +27,22 @@ module.exports = function(app) {
     });   
   });
 
+  app.get("/Bookmarks/Update?:id", function(req, res) {
+    var id = (req.params.id).slice(1);
+    db.BookMark.findOne({
+      where:{
+        id:id
+      }
+    }).then(function(result) {
+      res.render("update", {
+        data: result
+      });
+    });   
+  });
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
   });  
 };
+
