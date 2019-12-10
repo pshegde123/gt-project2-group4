@@ -6,7 +6,7 @@ module.exports = function(app) {
   app.get("/", function(req, res) {
     db.BookMark.findAll({}).then(function(dbExamples) {
       res.render("index", {
-        YOUR_API_KEY: process.env.YOUR_API_KEY
+        YOUR_API_KEY: process.env.YOUR_API_KEY, bookmarks:dbExamples
       });
     });
   });
