@@ -25,4 +25,22 @@ module.exports = function(app) {
       res.json(dbExample);
     });
   });
+
+  // PUT route for updating bookmark
+    app.put("/api/bookmarks/", function(req, res) {    
+    db.BookMark.update(
+      {
+        City:req.body.city,
+        Address:req.body.address,
+        Notes:req.body.notes  
+      },
+      {
+        where:{id: req.body.id }
+      }
+      )
+      .then(function(dbPost) {
+        res.json(dbPost);
+      });
+  });
 };
+
