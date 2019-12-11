@@ -1,3 +1,4 @@
+
 var db = require("../models");
 
 module.exports = function(app) {
@@ -5,7 +6,7 @@ module.exports = function(app) {
   app.get("/", function(req, res) {
     db.BookMark.findAll({}).then(function(dbExamples) {
       res.render("index", {
-        examples: dbExamples
+        YOUR_API_KEY: process.env.YOUR_API_KEY, bookmarks:dbExamples
       });
     });
   });
@@ -13,36 +14,35 @@ module.exports = function(app) {
   app.get("/Bookmarks", function(req, res) {
     db.BookMark.findAll({}).then(function(dbExamples) {
       res.render("bookmark", {
-        msg: "Welcome!",
-        examples: dbExamples
+        bookmarks: dbExamples
       });
     });
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.BookMark.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
+  app.get("/Bookmarks/cms", function(req, res) {
+    db.BookMark.findAll({}).then(function(dbExamples) {
+      res.render("cms", {
+        examples: dbExamples
       });
-    });
+    });   
+  });
+
+  app.get("/Bookmarks/Update?:id", function(req, res) {
+    var id = (req.params.id).slice(1);
+    db.BookMark.findOne({
+      where:{
+        id:id
+      }
+    }).then(function(result) {
+      res.render("update", {
+        data: result
+      });
+    });   
   });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
-  });
-
-    // POST route for saving a new bookmark
-  app.post("/api/bookmark", function(req, res) {
-      db.Bookmark.create({
-        City: req.body.city,
-        Address: req.body.address,
-        Notes: req.body.notes
-      })
-        .then(function(result) {
-          res.json(result);
-        });
-    });
-  
+  });  
 };
+
