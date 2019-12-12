@@ -12,7 +12,8 @@ $(function () {
     var newEntry = {
       city: $("#bcity").val().trim(),
       address: $("#baddress").val().trim(),
-      notes: $("#notes").val().trim()
+      notes: $("#notes").val().trim(),
+      image:encodeURI($("locationImage").val())
     };
     // Send the POST request.
     $.ajax("/api/bookmarks/add", {
