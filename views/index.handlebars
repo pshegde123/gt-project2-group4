@@ -11,14 +11,18 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/">Home <span class="sr-only">(currnt)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/Bookmarks">Bookmarks</a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchBar">
+            <label for="maxRadius" style="color:beige;">Search within
+              <input name="maxRadius" class="form-control" id="maxRadius" type="number" value="100" min="1"
+                style="width: 100px;" />
+            </label>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="userAddress">
             <button id="submit" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
@@ -26,19 +30,27 @@
       <div class="row">
         <img src="images/haunted.jpg" style="width: 100%;height:200px;margin:20px;" alt="hounted_house">
       </div>
-      <div class="row">
-        <div id="map">
-        </div>
+
+      <h2 class="row" id="location-search-alert">All Locations</h2>
+
+      <div class="row" id="locations-near-you-map"></div>
+
+      <div class="row" id="locations-near-you">
+
       </div>
+      <div class="row" id="google-reviews"></div>
+
       <div class="row " id="cards-row">
         {{#each bookmarks}}
         <div class="col-sm-4">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 18rem;font-family:Georgia, 'Times New Roman', Times, serif;font-size:12px;">
             <img class="card-img-top" src="images/background.jpg" alt="Card image cap">
             <div class="card-body">
-              <h5 class="card-title">{{City}}</h5>
-              <p class="card-text">{{Address}},{{Notes}}</p>
-              <a href="/Bookmarks" class="btn btn-primary">View Details</a>
+              <h1 class="card-title">{{City}}</h1>
+              <p class="card-text">
+                <p>Addres::{{Address}}</p>
+                <p>Notes:{{Notes}}</p>
+                <a href="/Bookmarks" class="btn btn-primary mt-2">View Details</a>
             </div>
           </div>
         </div>
@@ -49,4 +61,7 @@
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script defer
+  src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&key=AIzaSyC9e4wFJMlra1qxDOFUnOP5PR5WmuoSdU0&callback=createSearchableMap"></script>
+<script src="/js/jquery-google-reviews.js"></script>  
 <script src="/js/index.js"></script>
