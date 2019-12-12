@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "admin",
+    "password": "white",
     "database": "bookmarksdb",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {

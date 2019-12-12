@@ -1,11 +1,12 @@
-*{
-  padding: 0px;
-  font-family: Arial;
-  box-sizing: border-box;
+body, .parallax {
+  background-image: url("../images/shutterstock_559677994.0.jpg");
+  background-size: 255vmin;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-.list-group-item {
-  line-height: 2.5;
-}
+
 #mainpage{
   padding: 0px;
   min-height: 1000px;
@@ -18,9 +19,4 @@
 }
 #searchBar{
   width: 400px;
-}
-.card-header button.delete,
-button.edit{
-  float: right;
-  margin: 5px;
 }
