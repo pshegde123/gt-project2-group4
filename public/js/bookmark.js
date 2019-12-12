@@ -8,12 +8,14 @@ $(function () {
 
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
-    
+
     var newEntry = {
       city: $("#bcity").val().trim(),
       address: $("#baddress").val().trim(),
       notes: $("#notes").val().trim()
     };
+
+
     // Send the POST request.
     $.ajax("/api/bookmarks/add", {
       type: "POST",
@@ -28,7 +30,7 @@ $(function () {
     );
   });
 
-// DELETE route for deleting bookmark
+  // DELETE route for deleting bookmark
   $(".deleteBookmark").on("click", function (event) {
     var id = $(this).data("id");
     // Send the DELETE request.
@@ -43,12 +45,12 @@ $(function () {
   });
 
   // PUT route for updating bookmark
-  $(".editBookmark").on("click", function (event) {    
+  $(".editBookmark").on("click", function (event) {
     var id = $(this).data("id");
-    var city=$(this).data("city");
-    var address=$(this).data("address");
-    var notes=$(this).data("notes");
+    var city = $(this).data("city");
+    var address = $(this).data("address");
+    var notes = $(this).data("notes");
     //location.href = "/Bookmarks/Update?mark_id="+id;
-    location.href = "/Bookmarks/Update?"+id+"?"+city+"?"+address+"?"+notes;
-    });
+    location.href = "/Bookmarks/Update?" + id + "?" + city + "?" + address + "?" + notes;
+  });
 });    
