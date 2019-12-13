@@ -13,13 +13,13 @@ You can also create bookmark for a location. Click on the 'Bookmark' option in N
 This app is deployed on [Heroku](https://heroku.com) for live demo check [https://hounted-house-locator.herokuapp.com/](https://hounted-house-locator.herokuapp.com/)
 
 ### Technologies Used
-* [Node JS]
-* [Express]
-* [Handlebars]
-* [Sequelize]
-* [jQuery]
-* [Google Maps and Places API]
-* [MySQL]
+* [Node JS](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [Handlebars](https://handlebarsjs.com/) : Web Template Framework
+* [Sequelize](https://sequelize.org/) : Node js ORM for MySQL database.
+* jQuery
+* [Google Maps and Places API](https://developers.google.com/places/web-service/intro)
+* MySQL Database
 
 
 
