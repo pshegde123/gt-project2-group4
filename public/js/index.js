@@ -47,26 +47,6 @@ function createSearchableMap(locations = allLocations) {
         var place_id='';
         infoWindow.setContent(infoWindowContent[i][0]);
         infoWindow.open(map, marker);
-        
-        //Retrieve Google place id from the locations content
-        var location_id_str = infoWindowContent[i][0];
-        var split_array=location_id_str.split("<p>");
-        for(let x=0;x<split_array.length;x++){
-          if(split_array[x].includes("ID")){
-            var tag=split_array[x];
-            var firstIndex =tag.indexOf(':');
-            var lastIndex =tag.indexOf('<');
-            place_id = tag.substr((firstIndex+1),(lastIndex-3))
-          }
-        }
-        //Display google reviews for this marker
-        $("#google-reviews").googlePlaces({
-          placeId: place_id//'ChIJp2QxV_sJVFMR1DEp1x_16F8' //Find placeID @: https://developers.google.com/places/place-id
-          , render: ['reviews']
-          , min_rating: 4
-          , max_rows: 4
-        });
-
       }
     })(marker, i));
 
@@ -116,11 +96,11 @@ function filterLocations() {
       if (filteredLocations.length > 0) {
         createSearchableMap(filteredLocations);
         createListOfLocations(filteredLocations);
-        searchResultsAlert.innerHTML = 'Chipotle Locations within ' + maxRadius + ' miles of ' + userAddress + ':';
+        searchResultsAlert.innerHTML = 'Locations within ' + maxRadius + ' miles of ' + userAddress + ':';
       } else {
         console.log("nothing found!");
         document.getElementById('locations-near-you').innerHTML = '';
-        searchResultsAlert.innerHTML = 'Sorry, no Chipotle locations were found within ' + maxRadius + ' miles of ' + userAddress + '.';
+        searchResultsAlert.innerHTML = 'Sorry, no locations were found within ' + maxRadius + ' miles of ' + userAddress + '.';
       }
 
       function isWithinRadius(location) {
