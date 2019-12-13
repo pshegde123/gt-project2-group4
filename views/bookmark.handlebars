@@ -1,15 +1,14 @@
 <div class="container">
-  <h2>Bookmarks</h2>
   <hr>
   <a class="btn btn-primary" href="/">Home</a>
   <a id="btnNewPlace" class="btn btn-primary" style="float: right;" href="/Bookmarks/cms">Add New Place</a>
     <div class="col-md-12 blog-container">
       <ul>
         {{#each bookmarks}}
-          <div class="card mt-2">
-            <div class="card-header">
+          <div class="card mt-4">
+            <div class="card-header text-center" style="font-size: 16px;font-weight:bold;background:lightgrey;">
               <button class="delete btn btn-danger deleteBookmark" data-id="{{this.id}}">X</button>
-              <button class="edit btn btn-default editBookmark" data-id="{{this.id}}" data-city="{{this.City}}" data-address="{{this.Address}}" data-notes="{{this.Notes}}">EDIT</button>
+              <button class="edit btn btn-success editBookmark" data-id="{{this.id}}" data-city="{{this.City}}" data-address="{{this.Address}}" data-notes="{{this.Notes}}">EDIT</button>
               {{ City }}
             </div>
             <div class="card-body">
