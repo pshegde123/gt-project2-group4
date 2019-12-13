@@ -1,71 +1,158 @@
-// Get references to page elements
-var $searchBarText = $("#searchBar");
-var $submitBtn = $("#submit");
-var map;
-var infoWindow;
+function createSearchableMap(locations = allLocations) {
+  var bounds = new google.maps.LatLngBounds();
+  var mapOptions = { mapTypeId: 'roadmap' };
+  var markers = [];
+  var infoWindowContent = [];
 
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function (event) {
-  event.preventDefault();
-  var searchString = $searchBarText.val().trim();
-  console.log("searchString=", searchString);
-  $searchBarText.val("");
-};
-
-function initialize() {
-  /*var input = document.getElementById('searchBar');
+  //Auto-complete
+  var input = document.getElementById('userAddress');
   var autocomplete = new google.maps.places.Autocomplete(input);
   google.maps.event.addListener(autocomplete, 'place_changed', function () {
     var place = autocomplete.getPlace();
     var name = place.name;
     var latitude = place.geometry.location.lat();
     var longitude = place.geometry.location.lng();
-    console.log("New location:", name, latitude, longitude);
-  });*/
-  var center = new google.maps.LatLng(37.4219999, -122.0862462);
-  var mapProp = {
-    center: center,
-    zoom: 13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  map = new google.maps.Map(document.getElementById("map"), mapProp);
-  //display markers on the map
-  displayMarkers(center, map);
-}
-function displayMarkers(centerLocation, map) {
+  });
 
-  var request = {
-    location: centerLocation,
-    radius: 8047,
-    types: ['tourist_attraction']
-  };
-  
-  infoWindow = new google.maps.InfoWindow();
+  var map = new google.maps.Map(document.getElementById('locations-near-you-map'), mapOptions);
 
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, callback);
-}
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (let i = 0; i < results.length; i++) {
-      createMarker(results[i]);
+  map.setTilt(45);
+
+  locations.forEach(function (location) {
+    markers.push([location.name, location.lat, location.lng]);
+
+    infoWindowContent.push(['<div class="infoWindow"><h3>' + location.name +
+      '</h3><p>' + location.address + '<br />' + location.city +
+      ', ' + location.state + ' ' + location.zip + '</p><p>Phone ' +
+      location.phone + '</p><p>ID:'+location.id+'</p></div>']);
+  });
+
+  var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+  // Place the markers on the map
+  for (i = 0; i < markers.length; i++) {
+    var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+    bounds.extend(position);
+    marker = new google.maps.Marker({
+      position: position,
+      map: map,
+      title: markers[i][0]
+    });
+
+    // Add an infoWindow to each marker, and create a closure so that the current
+    // marker is always associated with the correct click event listener
+    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+      return function () {
+        var place_id='';
+        infoWindow.setContent(infoWindowContent[i][0]);
+        infoWindow.open(map, marker);
+        
+        //Retrieve Google place id from the locations content
+        var location_id_str = infoWindowContent[i][0];
+        var split_array=location_id_str.split("<p>");
+        for(let x=0;x<split_array.length;x++){
+          if(split_array[x].includes("ID")){
+            var tag=split_array[x];
+            var firstIndex =tag.indexOf(':');
+            var lastIndex =tag.indexOf('<');
+            place_id = tag.substr((firstIndex+1),(lastIndex-3))
+          }
+        }
+        //Display google reviews for this marker
+        $("#google-reviews").googlePlaces({
+          placeId: place_id//'ChIJp2QxV_sJVFMR1DEp1x_16F8' //Find placeID @: https://developers.google.com/places/place-id
+          , render: ['reviews']
+          , min_rating: 4
+          , max_rows: 4
+        });
+
+      }
+    })(marker, i));
+
+    // Only use the bounds to zoom the map if there is more than 1 location shown
+    if (locations.length > 1) {
+      map.fitBounds(bounds);
+    } else {
+      var center = new google.maps.LatLng(locations[0].lat, locations[0].lng);
+      map.setCenter(center);
+      map.setZoom(15);
     }
   }
 }
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-  google.maps.event.addListener(marker,'click',function(){
-    infoWindow.setContent(place.name);
-    infoWindow.open(map,this);
+
+function filterLocations() {
+  var userLatLng;
+  var geocoder = new google.maps.Geocoder();
+  var userAddress = document.getElementById('userAddress').value.replace(/[^a-z0-9\s]/gi, '');
+  var maxRadius = parseInt(document.getElementById('maxRadius').value, 10);
+
+
+  if (userAddress && maxRadius) {
+    userLatLng = getLatLngViaHttpRequest(userAddress);
+  }
+
+  function getLatLngViaHttpRequest(address) {
+    // Set up a request to the Geocoding API
+    // Supported address format is City, City + State, just a street address, or any combo
+    var addressStripped = address.split(' ').join('+');
+    var key = "AIzaSyC9e4wFJMlra1qxDOFUnOP5PR5WmuoSdU0";
+    var request = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + addressStripped + '&key=' + key;
+
+    // Call the Geocoding API using jQuery GET, passing in the request and a callback function 
+    // which takes one argument "data" containing the response
+    $.get(request, function (data) {
+      var searchResultsAlert = document.getElementById('location-search-alert');
+
+      // Abort if there is no response for the address data
+      if (data.status === "ZERO_RESULTS") {
+        searchResultsAlert.innerHTML = "Sorry, '" + address + "' seems to be an invalid address.";
+        return;
+      }
+
+      var userLatLng = new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng);
+      var filteredLocations = allLocations.filter(isWithinRadius);
+
+      if (filteredLocations.length > 0) {
+        createSearchableMap(filteredLocations);
+        createListOfLocations(filteredLocations);
+        searchResultsAlert.innerHTML = 'Chipotle Locations within ' + maxRadius + ' miles of ' + userAddress + ':';
+      } else {
+        console.log("nothing found!");
+        document.getElementById('locations-near-you').innerHTML = '';
+        searchResultsAlert.innerHTML = 'Sorry, no Chipotle locations were found within ' + maxRadius + ' miles of ' + userAddress + '.';
+      }
+
+      function isWithinRadius(location) {
+        var locationLatLng = new google.maps.LatLng(location.lat, location.lng);
+        var distanceBetween = google.maps.geometry.spherical.computeDistanceBetween(locationLatLng, userLatLng);
+
+        return convertMetersToMiles(distanceBetween) <= maxRadius;
+      }
+    });
+  }
+}
+
+function convertMetersToMiles(meters) {
+  return (meters * 0.000621371);
+}
+
+function createListOfLocations(locations) {
+  var locationsList = document.getElementById('locations-near-you');
+
+  // Clear any existing locations from the previous search first
+  locationsList.innerHTML = '';
+
+  locations.forEach(function (location) {
+    var specificLocation = document.createElement('div');
+    var locationInfo = "<h4>" + location.name + "</h4><p>" + location.address + "</p>" +
+      "<p>" + location.city + ", " + location.state + " " + location.zip + "</p><p>" + location.phone + "</p>";
+    specificLocation.setAttribute("class", 'location-near-you-box');
+    specificLocation.innerHTML = locationInfo;
+    locationsList.appendChild(specificLocation);
   });
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
-
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
+$('#submit').on('click', function (e) {
+  e.preventDefault();
+  filterLocations();
+});
