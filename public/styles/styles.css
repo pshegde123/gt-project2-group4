@@ -1,13 +1,24 @@
-*{
-  padding: 0px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 18px;
-  color: #3f3f3f;
-  box-sizing: border-box;
+body, .parallax {
+  background-image: url("../images/shutterstock_559677994.0.jpg");
+  background-size: 255vmin;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
 #mainpage{
   padding: 0px;
   min-height: 1000px;
+}
+#map{
+  height: 300px;
+  width: 100%;
+  margin: 20px;
+  padding: 0px;
+}
+#searchBar{
+  width: 400px;
 }
 .card-header button.delete,
 button.edit{
