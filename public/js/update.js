@@ -16,7 +16,7 @@ $(document).ready(function() {
     }
 
     $("#bcity").val(cur_city);
-    $("#baddress").val(cur_address);
+    $("#baddress").val(decodeURI(cur_address));
     $("#notes").val(decodeURI(cur_notes));
 
     updateForm.submit(function (e) {
