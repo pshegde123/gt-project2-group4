@@ -1,7 +1,25 @@
-# gt-project2-group4
+# Haunted House Locator
+This is a NodeJS/Express app which makes use of Sequelize,Handlebars,MySQL and Google Maps and Places API to view haunted locations in Georgia.
 
-### Team Memeber
-* Pradnya Hegde | slack name: pradnya hegde | github id:pshegde123
-* Eric Hamil | slack name: eric | github id: ehamil79
-* Christian Colon | slack name: Christian | github id:chris350
-* Dock | slack name : Dock | github id: cyinine
+![](/public/images/Capture.PNG)
+
+### Overview
+This app displays a Google Map with markers poiting to haunted locations in Goergia. When you click on a marker a window pops-up with location details and lore about the place.At the top right of page there is a search bar and a 'Search Within' box. Google's Autocomplete feature is embedded with search bar that will help you to search for an address.Then select 'Search within' value and click on 'Search'
+button. Map will display all the locations within selected miles range.
+
+You can also create bookmark for a location. Click on the 'Bookmark' option in Navbar. Bookmark page will display 'Add New Place' button.Add location details. Once bookmark is added a new card will be displayed on 'Home' page.On the card there is 'View Details' button. Click this button to read, edit or delete the bookmark
+
+### Live Demo
+This app is deployed on [Heroku](https://heroku.com) for live demo check [https://hounted-house-locator.herokuapp.com/](https://hounted-house-locator.herokuapp.com/)
+
+### Technologies Used
+* [Node JS]
+* [Express]
+* [Handlebars]
+* [Sequelize]
+* [jQuery]
+* [Google Maps and Places API]
+* [MySQL]
+
+
+
