@@ -1,9 +1,7 @@
 <div class="container">
-  <h2>Edit Bookmarks</h2>
-  <hr>
   <a class="btn btn-primary" href="/">Home</a>
-  <div class="col-lg-4 text-center">
-    <form id="updateForm">
+  <div class="col-lg-4 text-center border border-dark">
+    <form id="updateForm" style="border:double 20px;margin-top:100px;margin-left:300px;width:350px;height:300px;background:white;">
       <div class="form-group">
         <label for="bcity">City:</label>
         <input type="text" id="bcity" class="form-control text-center">
@@ -16,7 +14,7 @@
         <label for="notes">Notes:</label>
         <input type="text" class="form-control text-center" id="notes" placeholder="e.g.Must visit">
       </div>
-      <button class="btn btn-block my-2" type="submit" id="editButton" data-id="{{this.id}}">Update Bookmark</button>
+      <button class="btn btn-block my-2" style="margin-top: 50px;" type="submit" id="editButton" data-id="{{this.id}}">Update Bookmark</button>
     </form>
   </div>
 </div>
