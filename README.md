@@ -21,5 +21,27 @@ This app is deployed on [Heroku](https://heroku.com) for live demo check [https:
 * [Google Maps and Places API](https://developers.google.com/places/web-service/intro)
 * MySQL Database
 
+### How to execute the app?
+(1) Visit [console.developers.google.com](https://console.developers.google.com) generate a Google API key. Refer this [link](https://developers.google.com/maps/documentation/javascript/get-api-key) to get started.
+
+(2) Include Google Maps Javascript API and Google Places API.
+
+(3)  Clone this repository.
+
+(4) Install the npm dependancies using command `npm install`
+
+(5) Change directory to config. Update `config.json` with your MySQL credentials.
+
+(6) In your terminal save your Google API key in the environment variable 'YOUR_API_KEY'.
+
+(7) Change directory to 'gt-project2group3' .Execute the web server using command 
+    
+    > `node server.js`
+    
+    Web server will run at port 3002. Visit http://localhost:3002 to view the app.
+    
+    
+
+
 
 
