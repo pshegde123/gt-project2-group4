@@ -20,11 +20,12 @@ function createSearchableMap(locations = allLocations) {
 
   locations.forEach(function (location) {
     markers.push([location.name, location.lat, location.lng]);
-
+    var search_string = String(location.name).split(' ').join('+');
+    var url = "<a href=\"https://www.google.com/search?q="+search_string+"+ghosts\">"+location.name+"</a>";
     infoWindowContent.push(['<div class="infoWindow"><h3>' + location.name +
       '</h3><p>' + location.address + '<br />' + location.city +
       ', ' + location.state + ' ' + location.zip + '</p><p>Phone ' +
-      location.phone + '</p><p>ID:'+location.id+'</p></div>']);
+      location.phone + '</p><p>Lore:'+location.lore+'</p><p>'+url+'</p></div>']);
   });
 
   var infoWindow = new google.maps.InfoWindow(), marker, i;
@@ -145,7 +146,7 @@ function createListOfLocations(locations) {
   locations.forEach(function (location) {
     var specificLocation = document.createElement('div');
     var locationInfo = "<h4>" + location.name + "</h4><p>" + location.address + "</p>" +
-      "<p>" + location.city + ", " + location.state + " " + location.zip + "</p><p>" + location.phone + "</p>";
+      "<p>" + location.city + ", " + location.state + " " + location.zip + "</p><p>" + location.phone + "</p><p>"+location.lore+"</p><p>"+url+"</p></div>";
     specificLocation.setAttribute("class", 'location-near-you-box');
     specificLocation.innerHTML = locationInfo;
     locationsList.appendChild(specificLocation);
