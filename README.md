@@ -30,7 +30,7 @@ This app is deployed on [Heroku](https://heroku.com) for live demo check [https:
 
 (4) Install the npm dependancies using command `npm install`
 
-(5) Change directory to config. Update `config.json` with your MySQL credentials.
+(5) Change directory to config. Update `config.json` with your MySQL credentials.Create database `bookmarksdb` using script `models\schema.sql`
 
 (6) In your terminal save your Google API key in the environment variable 'YOUR_API_KEY'.
 
